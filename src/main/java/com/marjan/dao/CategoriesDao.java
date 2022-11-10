@@ -2,6 +2,7 @@ package com.marjan.dao;
 
 import com.marjan.entities.Categories;
 import com.marjan.helpers.JPA;
+import com.marjan.helpers.JpaFetch;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,7 @@ public class CategoriesDao implements Dao<Categories>{
 
     @Override
     public Optional<Categories> findById(Long id) {
-        return Optional.ofNullable(JPA.getEm().find(Categories.class, id));
+        return Optional.ofNullable(JpaFetch.getEm().find(Categories.class, id));
     }
 
     @Override
@@ -22,7 +23,7 @@ public class CategoriesDao implements Dao<Categories>{
 
     @Override
     public List<Categories> all() {
-        return JPA.getEm().createQuery("from Categories ", Categories.class).getResultList();
+        return JpaFetch.getEm().createQuery("from Categories ", Categories.class).getResultList();
     }
 
     @Override

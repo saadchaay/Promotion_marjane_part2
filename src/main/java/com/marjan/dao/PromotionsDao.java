@@ -2,6 +2,7 @@ package com.marjan.dao;
 
 import com.marjan.entities.Promotions;
 import com.marjan.helpers.JPA;
+import com.marjan.helpers.JpaFetch;
 import jakarta.persistence.Query;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class PromotionsDao implements Dao<Promotions>{
     @Override
     public Optional<Promotions> findById(Long id) {
-        return Optional.ofNullable(JPA.getEm().find(Promotions.class, id));
+        return Optional.ofNullable(JpaFetch.getEm().find(Promotions.class, id));
     }
 
     @Override
@@ -22,7 +23,7 @@ public class PromotionsDao implements Dao<Promotions>{
 
     @Override
     public List<Promotions> all() {
-        return JPA.getEm().createQuery("from Promotions ", Promotions.class).getResultList();
+        return JpaFetch.getEm().createQuery("from Promotions ", Promotions.class).getResultList();
     }
 
     @Override

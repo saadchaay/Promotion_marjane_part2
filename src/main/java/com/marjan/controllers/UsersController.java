@@ -22,14 +22,13 @@ public class UsersController {
         if(checkEmailExists(users, email)){
             return false;
         } else {
-            if(role.equals(Enum.role.ADMIN.toString())){
+            if(role.equals(Enum.role.ADMIN.toString()))
                 for (Users user: users){
-                    if((long)user.getStoreId() == storeId) {
+                    if((long)user.getStoreId() == storeId && user.getRole().equals(role)) {
                         System.out.println("same admin with same store id");
                         return false;
                     }
                 }
-            }
             Users newUser = new Users();
             newUser.setName(name);
             newUser.setEmail(email);

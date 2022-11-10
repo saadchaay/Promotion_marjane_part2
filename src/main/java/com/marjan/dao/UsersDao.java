@@ -2,6 +2,7 @@ package com.marjan.dao;
 
 import com.marjan.entities.Users;
 import com.marjan.helpers.JPA;
+import com.marjan.helpers.JpaFetch;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,21 +12,20 @@ public class UsersDao implements Dao<Users> {
 
     @Override
     public Optional<Users> findById(Long id) {
-        return Optional.ofNullable(JPA.getEm().find(Users.class, id));
+        return Optional.ofNullable(JpaFetch.getEm().find(Users.class, id));
     }
 
     @Override
     public Users save(Users user) {
         JPA.trans(entityManager -> {
             entityManager.persist(user);
-//            entityManager.merge(user);
         });
         return user;
     }
 
     @Override
     public List<Users> all() {
-        return JPA.getEm().createQuery("from Users ", Users.class).getResultList();
+        return JpaFetch.getEm().createQuery("from Users ", Users.class).getResultList();
     }
 
     @Override

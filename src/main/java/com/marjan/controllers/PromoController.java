@@ -20,22 +20,15 @@ import java.util.stream.Collectors;
 
 public class PromoController {
 
-    PromotionsDao prmDao = new PromotionsDao();
-    List<Promotions> allPromo = prmDao.all();
-
     public static List<Promotions> listPromotions(Long storeId){
-        if(LocalTime.now().isAfter(LocalTime.of(8,0,0)) && LocalTime.now().isBefore(LocalTime.of(23,0,0))){
-            return new PromotionsDao().all().stream()
-                    .filter(promo -> promo.getStoreId() == storeId)
-                    .filter(promo -> promo.getEndDate().toLocalDate().isAfter(LocalDate.now()))
-                    .collect(Collectors.toList());
-        }else{
-            return null;
-        }
+        return new PromotionsDao().all().stream()
+                .filter(promo -> promo.getStoreId() == storeId)
+                .filter(promo -> promo.getEndDate().toLocalDate().isAfter(LocalDate.now()))
+                .collect(Collectors.toList());
     }
 
     public static List<Promotions> listPendingPromotions(Long storeId){
-//        if(LocalTime.now().isAfter(LocalTime.of(8,0,0)) && LocalTime.now().isBefore(LocalTime.of(23,0,0))){
+//        if(LocalTime.now().isAfter(LocalTime.of(8,0,0)) && LocalTime.now().isBefore(LocalTime.of(12,0,0))){
             return new PromotionsDao().all().stream()
                     .filter(promo ->  promo.getStoreId() == storeId)
                     .filter(promo -> Objects.equals(promo.getStatus(), Enum.status.PENDING.toString()))
@@ -74,20 +67,22 @@ public class PromoController {
         AtomicReference<Comments> comment = new AtomicReference<>(null);
         PromotionsDao promotionsDao = new PromotionsDao();
         Optional<Promotions> prm = promotionsDao.findById(id);
+        assert prm.isPresent();
+        System.out.println("promo to update: "+prm.get().getId());
         prm.ifPresent(pr -> {
             if(Objects.equals(pr.getStatus(), Enum.status.PENDING.toString())) {
                 pr.setStatus(Enum.status.ACCEPTED.toString());
                 if (promotionsDao.update((long) pr.getId(), pr)) {
-                    comment.set(new Comments());
-                    comment.get().setPromotionId(pr.getId());
-                    comment.get().setComment(commentToAdd);
-                    comment.set(new CommentsDao().save(comment.get()));
+                    Comments cmt = new Comments();
+                    cmt.setPromotionId(pr.getId());
+                    cmt.setComment(commentToAdd);
+                    comment.set(new CommentsDao().save(cmt));
                 }
             }
         });
         return comment.get();
     }
-
+    
     // refuse the promotion by manager
     public static Boolean refusePromotion(Long id){
         AtomicReference<Boolean> rtnValue = new AtomicReference<>(false);
@@ -102,6 +97,20 @@ public class PromoController {
             }
         });
         return rtnValue.get();
+    }
+
+    public static void expiredPromo(){
+        AtomicReference<Boolean> v = new AtomicReference<>(false);
+        List<Promotions> promos = new PromotionsDao().all().stream()
+                .filter(p -> Objects.equals(p.getStatus(), Enum.status.PENDING.toString()))
+                .filter(p -> p.getEndDate().toLocalDate().isBefore(LocalDate.now())).collect(Collectors.toList());
+        for (Promotions p: promos){
+            System.out.println(p.getId());
+            p.setStatus("EXPIRED");
+            if(new PromotionsDao().update((long) p.getId(), p)){
+                System.out.println(true);
+            }
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.marjan.dao;
 
 import com.marjan.entities.SubCategories;
 import com.marjan.helpers.JPA;
+import com.marjan.helpers.JpaFetch;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,7 @@ public class SubCategoriesDao implements Dao<SubCategories>{
 
     @Override
     public Optional<SubCategories> findById(Long id) {
-        return Optional.ofNullable(JPA.getEm().find(SubCategories.class, id));
+        return Optional.ofNullable(JpaFetch.getEm().find(SubCategories.class, id));
     }
 
     @Override
@@ -22,7 +23,7 @@ public class SubCategoriesDao implements Dao<SubCategories>{
 
     @Override
     public List<SubCategories> all() {
-        return JPA.getEm().createQuery("from SubCategories ", SubCategories.class).getResultList();
+        return JpaFetch.getEm().createQuery("from SubCategories ", SubCategories.class).getResultList();
     }
 
     @Override

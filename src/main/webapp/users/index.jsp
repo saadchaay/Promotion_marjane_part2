@@ -21,7 +21,7 @@
                   <!-- Main 3 column grid -->
                   <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
                       <!-- Left column -->
-                      <div class="grid grid-cols-1 gap-4 lg:col-span-2" x-data="{open: false, alert: true}">
+                      <div class="grid grid-cols-1 gap-4 lg:col-span-2" x-data="{open: false}">
                           <section aria-labelledby="section-1-title">
                               <h2 class="sr-only" id="section-1-title">Section title</h2>
                               <div class="rounded-lg bg-white overflow-hidden shadow">
@@ -30,8 +30,8 @@
                                           <h1 class="text-xl font-medium text-gray-900" id="promo-table">Promotions</h1>
                                           <button x-on:click="open = !open" class="py-2 px-3 text-white bg-cyan-700 hover:bg-cyan-900 hover:cursor-pointer rounded-md">Add Promotion</button>
                                       </div>
-                                      <c:if test="${ feedback == 'success' }" >
-                                          <div class="mb-4 rounded-md bg-green-50 p-4" x-show="alert">
+                                      <c:if test="${success}" >
+                                          <div class="mb-4 rounded-md bg-green-50 p-4">
                                               <div class="flex">
                                                   <div class="flex-shrink-0">
                                                       <!-- Heroicon name: solid/check-circle -->
@@ -44,7 +44,7 @@
                                                   </div>
                                                   <div class="ml-auto pl-3">
                                                       <div class="-mx-1.5 -my-1.5">
-                                                          <a href="${pageContext.request.contextPath}/admin/" x-on:click="alert = !alert" type="button" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
+                                                          <a href="${pageContext.request.contextPath}/admin/" type="button" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
                                                               <span class="sr-only">Dismiss</span>
                                                               <!-- Heroicon name: solid/x -->
                                                               <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -56,8 +56,8 @@
                                               </div>
                                           </div>
                                       </c:if>
-                                      <c:if test="${ feedback == 'error' }" >
-                                          <div class="mb-4 rounded-md bg-red-50 p-4" x-show="alert">
+                                      <c:if test="${error}" >
+                                          <div class="mb-4 rounded-md bg-red-50 p-4">
                                               <div class="flex">
                                                   <div class="flex-shrink-0">
                                                       <!-- Heroicon name: solid/check-circle -->
@@ -70,7 +70,7 @@
                                                   </div>
                                                   <div class="ml-auto pl-3">
                                                       <div class="-mx-1.5 -my-1.5">
-                                                          <a href="${pageContext.request.contextPath}/admin/" x-on:click="alert = !alert " type="button" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                                                          <a href="${pageContext.request.contextPath}/admin/" type="button" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
                                                               <span class="sr-only">Dismiss</span>
                                                               <!-- Heroicon name: solid/x -->
                                                               <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -162,10 +162,13 @@
                                                               </strong>
                                                           </c:if>
                                                       </td>
-                                                      <td class="whitespace-nowrap px-4 py-2">
-                                                          <a href="#" class="text-sm font-medium text-blue-600 hover:underline">
-                                                              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                                          </a>
+                                                      <td class="flex justify-center items-center">
+                                                          <form action="${pageContext.request.contextPath}/admin/?action=delete&promo=${promo.getId()}" method="post">
+                                                              <button  class="text-sm font-medium text-blue-600 hover:underline">
+                                                                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                              </button>
+                                                          </form>
+                                                          <a href="${pageContext.request.contextPath}/admin/promo/${promo.getId()}" class="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"> View </a>
                                                       </td>
                                                   </tr>
                                               </c:forEach>

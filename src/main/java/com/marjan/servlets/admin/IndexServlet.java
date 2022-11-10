@@ -3,6 +3,7 @@ package com.marjan.servlets.admin;
 import com.marjan.controllers.PromoController;
 import com.marjan.controllers.UsersController;
 import com.marjan.dao.CategoriesDao;
+import com.marjan.dao.PromotionsDao;
 import com.marjan.dao.StoresDao;
 import com.marjan.dao.SubCategoriesDao;
 import com.marjan.entities.Promotions;
@@ -14,10 +15,13 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.Objects;
 
 @WebServlet(name = "IndexServlet", value = "/admin/")
 public class IndexServlet extends HttpServlet {
+
+    static HashMap<String, Boolean> feedback;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +46,8 @@ public class IndexServlet extends HttpServlet {
         switch (request.getParameter("action")){
             case "promo" -> addNewPromotion(session, request, response);
             case "manager" -> addNewManager(session, request, response);
+            case "delete" -> deletePromo(Integer.parseInt(request.getParameter("promo")));
+            case "detail" -> detailPromo(Integer.parseInt(request.getParameter("promo")), request, response);
         }
     }
 
@@ -59,11 +65,11 @@ public class IndexServlet extends HttpServlet {
             newPromo.setCategoryId(Integer.parseInt(request.getParameter("category")));
         }
         if(PromoController.addPromotion(newPromo)){
-            request.setAttribute("feedback", "success");
+            feedback.put("newPromo", true);
         }else{
-            request.setAttribute("feedback", "error");
+            feedback.put("errorNewPromo", true);
         }
-        doGet(request, response);
+        response.sendRedirect("/admin/");
 
     }
 
@@ -79,10 +85,22 @@ public class IndexServlet extends HttpServlet {
         System.out.println(storeId);
         System.out.println(role);
         if(UsersController.addUser(name, role, email, password, (long) storeId)){
-            request.setAttribute("msg", "success");
+            feedback.put("newManager", true);
         }else{
-            request.setAttribute("msg", "cannot add new manager, try again.");
+            feedback.put("errorNewManager", true);
         }
-        doGet(request, response);
+        response.sendRedirect("/admin/");
+    }
+
+    public void deletePromo(int promoId){
+        if(new PromotionsDao().delete((long) promoId)){
+            feedback.put("delete", true);
+        }else{
+            feedback.put("errorDelete", true);
+        }
+    }
+
+    public void detailPromo(int promo, HttpServletRequest req, HttpServletResponse res){
+
     }
 }

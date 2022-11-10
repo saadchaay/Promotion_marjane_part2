@@ -14,7 +14,7 @@
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body>
-            <div class="min-h-full">
+            <div class="min-h-full" x-data="{detail: false}">
                 <jsp:include page="/components/header.jsp" />
 
                 <main class="-mt-32">
@@ -25,7 +25,7 @@
                                     <dt class="text-base font-normal text-gray-900">Total Applied Promotion</dt>
                                     <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
                                         <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-                                            71
+                                            ${statistic.get("accepted")}
                                         </div>
 
                                         <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
@@ -39,7 +39,7 @@
                                     <dt class="text-base font-normal text-gray-900">Total Pending Promotion</dt>
                                     <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
                                         <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-                                            58
+                                            ${statistic.get("pending")}
                                         </div>
 
                                         <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-amber-200 text-amber-600 md:mt-2 lg:mt-0">
@@ -53,7 +53,7 @@
                                     <dt class="text-base font-normal text-gray-900">Total Rejected Promotion</dt>
                                     <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
                                         <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-                                            24
+                                            ${statistic.get("rejected")}
                                         </div>
 
                                         <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800 md:mt-2 lg:mt-0">
@@ -66,6 +66,91 @@
                         <!-- /End replace -->
                     </div>
                 </main>
+                <c:if test="${details}" >
+                    <!-- This example requires Tailwind CSS v2.0+ -->
+                    <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-show="!detail">
+                        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                            <div  @click.outside="detail = true" class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                                    <div class="px-4 py-5 sm:px-6">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900">${admin.getStoresByStoreId().getName()}</h3>
+                                        <p class="mt-1 max-w-2xl text-sm text-gray-500">Store details and promotions.</p>
+                                    </div>
+                                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                                        <dl class="sm:divide-y sm:divide-gray-200">
+                                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                <dt class="text-sm font-medium text-gray-500">Admin full name</dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">${admin.getName()}</dd>
+                                            </div>
+                                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                <dt class="text-sm font-medium text-gray-500">Admin email address</dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">${admin.getEmail()}</dd>
+                                            </div>
+                                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                <dt class="text-sm font-medium text-gray-500">Store city</dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">${admin.getStoresByStoreId().getCity()}</dd>
+                                            </div>
+                                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                                <dt class="text-sm font-medium text-gray-500">Managers number</dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">${countManagers} Managers</dd>
+                                            </div>
+                                            <div class="flex-column items-center justify-center">
+                                                <dt class="mx-3 text-sm font-medium text-gray-500">Promotions</dt>
+                                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                                    <ul role="list" class="m-2 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2">
+                                                        <li class="col-span-1 flex shadow-sm rounded-md">
+                                                            <div class="flex-shrink-0 flex items-center justify-center w-16 bg-green-600 text-white text-sm font-medium rounded-l-md">AC</div>
+                                                            <div class="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                                                                <div class="flex-1 px-4 py-2 text-sm truncate">
+                                                                    <a href="#" class="text-gray-900 font-medium hover:text-gray-600">Accepted Promotions</a>
+                                                                    <p class="text-gray-500">${promoStatistic.get("accepted")} Promos</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="col-span-1 flex shadow-sm rounded-md">
+                                                            <div class="flex-shrink-0 flex items-center justify-center w-16 bg-yellow-500 text-white text-sm font-medium rounded-l-md">PE</div>
+                                                            <div class="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                                                                <div class="flex-1 px-4 py-2 text-sm truncate">
+                                                                    <a href="#" class="text-gray-900 font-medium hover:text-gray-600">Pending Promotions</a>
+                                                                    <p class="text-gray-500">${promoStatistic.get("pending")} Promos</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="col-span-1 flex shadow-sm rounded-md">
+                                                            <div class="flex-shrink-0 flex items-center justify-center w-16 bg-red-700 text-white text-sm font-medium rounded-l-md">RE</div>
+                                                            <div class="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                                                                <div class="flex-1 px-4 py-2 text-sm truncate">
+                                                                    <a href="#" class="text-gray-900 font-medium hover:text-gray-600">Rejected Promotions</a>
+                                                                    <p class="text-gray-500">${promoStatistic.get("rejected")} Promos</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="col-span-1 flex shadow-sm rounded-md">
+                                                            <div class="flex-shrink-0 flex items-center justify-center w-16 bg-gray-800 text-white text-sm font-medium rounded-l-md">EX</div>
+                                                            <div class="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                                                                <div class="flex-1 px-4 py-2 text-sm truncate">
+                                                                    <a href="#" class="text-gray-900 font-medium hover:text-gray-600">Expired Promotions</a>
+                                                                    <p class="text-gray-500">${promoStatistic.get("expired")} Promos</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </dd>
+                                            </div>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
 
                 <main class="-mt-30 pb-8">
                     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -87,7 +172,7 @@
                                                     </svg>
                                                 </button>
                                             </div>
-                                            <c:if test="${ feedback == 'success' }" >
+                                            <c:if test="${success}" >
                                                 <div class="mb-4 rounded-md bg-green-50 p-4" x-show="alert">
                                                     <div class="flex">
                                                         <div class="flex-shrink-0">
@@ -101,7 +186,7 @@
                                                         </div>
                                                         <div class="ml-auto pl-3">
                                                             <div class="-mx-1.5 -my-1.5">
-                                                                <button x-on:click="alert = !alert" type="button" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
+                                                                <button x-on:click="alert = false" type="button" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
                                                                     <span class="sr-only">Dismiss</span>
                                                                     <!-- Heroicon name: solid/x -->
                                                                     <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -113,7 +198,7 @@
                                                     </div>
                                                 </div>
                                             </c:if>
-                                            <c:if test="${ feedback == 'error' }" >
+                                            <c:if test="${error}" >
                                                 <div class="mb-4 rounded-md bg-red-50 p-4" x-show="alert">
                                                     <div class="flex">
                                                         <div class="flex-shrink-0">
@@ -127,7 +212,7 @@
                                                         </div>
                                                         <div class="ml-auto pl-3">
                                                             <div class="-mx-1.5 -my-1.5">
-                                                                <button x-on:click="alert = !alert " type="button" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                                                                <button x-on:click="alert = false " type="button" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
                                                                     <span class="sr-only">Dismiss</span>
                                                                     <!-- Heroicon name: solid/x -->
                                                                     <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -143,7 +228,7 @@
                                                 <ul role="list" class="divide-y divide-gray-200">
                                                     <c:forEach var="admin" items="${admins}">
                                                         <li>
-                                                            <a href="#" class="block hover:bg-gray-50">
+                                                            <a href="${pageContext.request.contextPath}/general/dashboard?action=details&admin=${admin.getStoresByStoreId().getId()}" class="block hover:bg-gray-50">
                                                                 <div class="flex items-center px-4 py-4 sm:px-6">
                                                                     <div class="min-w-0 flex-1 flex items-center">
                                                                         <div class="flex-shrink-0">
@@ -210,7 +295,7 @@
                                                             </div>
 
                                                             <div class="col-span-6 sm:col-span-3">
-                                                                <label for="store" class="block text-sm font-medium text-gray-700">Store</label>
+                                                                <label for="store" class="block text-sm font-medium text-gray-700">Available Store</label>
                                                                 <select id="store" name="store" autocomplete="store" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                                     <c:forEach items="${stores}" var="store">
                                                                         <option value="${store.getId()}">${store.getName()}</option>
@@ -250,40 +335,6 @@
                                             <h1 class="ml-4 mb-8 text-xl text-gray-600">All store</h1>
                                             <div class="bg-white shadow overflow-hidden sm:rounded-md">
                                                 <ul role="list" class="divide-y divide-gray-200">
-                                                    <%--<c:forEach items="${stores}" var="store" >
-                                                        <li>
-                                                            <a href="#" class="block hover:bg-gray-50">
-                                                                <div class="px-4 py-4 sm:px-6">
-                                                                    <div class="flex items-center justify-between">
-                                                                        <p class="text-sm font-medium text-indigo-600 truncate">
-                                                                            ${store.getName()}</p>
-                                                                    </div>
-                                                                    <div class="mt-2 sm:flex sm:justify-between">
-                                                                        <div class="sm:flex">
-                                                                            <p class="flex items-center text-sm text-gray-500">
-                                                                                <!-- Heroicon name: solid/users -->
-                                                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                                                                                </svg>
-                                                                                <c:forEach items="${admins}" var="admin" >
-                                                                                    <c:if test="${ admin.getStoreId() == store.getId() }" >
-                                                                                        ${admin.getName()}
-                                                                                    </c:if>
-                                                                                </c:forEach>
-                                                                            </p>
-                                                                            <p class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
-                                                                                <!-- Heroicon name: solid/location-marker -->
-                                                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                                                                                </svg>
-                                                                                ${store.getCity()}
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                    </c:forEach>--%>
                                                     <c:forEach items="${admins}" var="admin" >
                                                         <li>
                                                             <a href="#" class="block hover:bg-gray-50">
@@ -299,11 +350,6 @@
                                                                                 <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                                                     <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
                                                                                 </svg>
-<%--                                                                                <c:forEach items="${admins}" var="admin" >--%>
-<%--                                                                                    <c:if test="${ admin.getStoreId() == store.getId() }" >--%>
-<%--                                                                                        ${admin.getName()}--%>
-<%--                                                                                    </c:if>--%>
-<%--                                                                                </c:forEach>--%>
                                                                                 ${admin.getName()}
                                                                             </p>
                                                                             <p class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">

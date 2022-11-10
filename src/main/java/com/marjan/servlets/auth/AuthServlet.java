@@ -1,6 +1,7 @@
 package com.marjan.servlets.auth;
 
 import com.marjan.controllers.AuthController;
+import com.marjan.controllers.PromoController;
 import com.marjan.entities.SupAdmin;
 import com.marjan.entities.Users;
 import com.marjan.helpers.Enum;
@@ -38,10 +39,10 @@ public class AuthServlet extends HttpServlet {
         String role = request.getParameter("role");
         String pwd = request.getParameter("password");
         String login = "general-admin".equals(role) ? request.getParameter("username"):request.getParameter("email");
+        PromoController.expiredPromo();
         switch (role){
             case "general-admin" -> {
                 SupAdmin admin = AuthController.isAdminAuth(login, pwd);
-                System.out.println(role);
                 if(admin != null){
                     session.setAttribute("role", role);
                     session.setAttribute("loggedIn", admin);
@@ -53,7 +54,6 @@ public class AuthServlet extends HttpServlet {
             }
             case "admin", "manager" -> {
                 Users user = AuthController.isUserAuth(login, pwd);
-                System.out.println(role);
                 if(user != null){
                     session.setAttribute("role", role);
                     session.setAttribute("loggedIn", user);

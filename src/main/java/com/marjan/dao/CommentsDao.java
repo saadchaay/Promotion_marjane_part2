@@ -2,6 +2,7 @@ package com.marjan.dao;
 
 import com.marjan.entities.Comments;
 import com.marjan.helpers.JPA;
+import com.marjan.helpers.JpaFetch;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,7 @@ public class CommentsDao implements Dao<Comments>{
 
     @Override
     public Optional<Comments> findById(Long id) {
-        return Optional.ofNullable(JPA.getEm().find(Comments.class, id));
+        return Optional.ofNullable(JpaFetch.getEm().find(Comments.class, id));
     }
 
     @Override
@@ -22,7 +23,7 @@ public class CommentsDao implements Dao<Comments>{
 
     @Override
     public List<Comments> all() {
-        return JPA.getEm().createQuery("from Comments ", Comments.class).getResultList();
+        return JpaFetch.getEm().createQuery("from Comments ", Comments.class).getResultList();
     }
 
     @Override

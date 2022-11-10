@@ -2,6 +2,7 @@ package com.marjan.dao;
 
 import com.marjan.entities.SupAdmin;
 import com.marjan.helpers.JPA;
+import com.marjan.helpers.JpaFetch;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,7 @@ public class AdminDao implements Dao<SupAdmin> {
 
     @Override
     public Optional<SupAdmin> findById(Long id) {
-        return Optional.ofNullable(JPA.getEm().find(SupAdmin.class, id));
+        return Optional.ofNullable(JpaFetch.getEm().find(SupAdmin.class, id));
     }
 
     @Override
@@ -22,7 +23,7 @@ public class AdminDao implements Dao<SupAdmin> {
 
     @Override
     public List<SupAdmin> all() {
-        return JPA.getEm().createQuery("from SupAdmin ", SupAdmin.class).getResultList();
+        return JpaFetch.getEm().createQuery("from SupAdmin ", SupAdmin.class).getResultList();
     }
 
     @Override

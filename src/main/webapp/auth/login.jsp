@@ -103,7 +103,7 @@
                           </div>
                           <div class="flex items-center justify-between">
                             <div>
-                              <input id="general-admin" x-on:click="open = true" name="role" value="general-admin" type="radio" class="peer hidden [&:checked_+_label_svg]:block" checked />
+                              <input id="general-admin" x-on:click="open = true" name="role" value="general-admin" type="radio" class="peer hidden [&:checked_+_label_svg]:block"  />
 
                               <label for="general-admin" class="flex cursor-pointer items-center justify-center gap-2 rounded-md border border-gray-100 py-2 px-3 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white">
                                 <svg class="hidden h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" >
@@ -114,7 +114,7 @@
                             </div>
 
                             <div>
-                              <input id="admin" x-on:click="open = false" name="role" value="admin" type="radio" class="peer hidden [&:checked_+_label_svg]:block" />
+                              <input id="admin" x-on:click="open = false" name="role" value="admin" type="radio" class="peer hidden [&:checked_+_label_svg]:block" checked />
 
                               <label for="admin" class="flex cursor-pointer items-center justify-center gap-2 rounded-md border border-gray-100 py-2 px-3 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white">
                                 <svg class="hidden h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" >

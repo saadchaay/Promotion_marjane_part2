@@ -100,6 +100,13 @@
                                                 Pending
                                             </strong>
                                         </c:if>
+                                        <c:if test="${ promo.getStatus() == 'EXPIRED' }" >
+                                            <strong
+                                                    class="rounded bg-gray-300 px-3 py-1.5 text-xs font-medium text-gray-800"
+                                            >
+                                                Expired
+                                            </strong>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>

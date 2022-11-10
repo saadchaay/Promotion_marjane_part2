@@ -65,7 +65,7 @@ class PromoControllerTest {
 
     @Test
     void acceptPromotionByAddingComment(){
-        assertNotNull(PromoController.acceptPromotion(22L,
+        assertNotNull(PromoController.acceptPromotion(8L,
                 "accept this promotion cuz we have more than 60 unites in the stock"));
     }
 
