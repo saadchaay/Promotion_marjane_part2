@@ -12,7 +12,7 @@ public class CategoriesDao implements Dao<Categories>{
 
     @Override
     public Optional<Categories> findById(Long id) {
-        return Optional.ofNullable(JpaFetch.getEm().find(Categories.class, id));
+        return Optional.ofNullable(JPA.getEntityManager().find(Categories.class, id));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class CategoriesDao implements Dao<Categories>{
 
     @Override
     public List<Categories> all() {
-        return JpaFetch.getEm().createQuery("from Categories ", Categories.class).getResultList();
+        return JPA.getEntityManager().createQuery("from Categories ", Categories.class).getResultList();
     }
 
     @Override

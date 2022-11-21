@@ -17,6 +17,6 @@ public class JpaFetch {
     public static EntityManager getEm(){
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
 //        System.out.println(JPA.getEmf().createEntityManager());
-        return JPA.getEmf().createEntityManager();
+        return JPA.getEntityManager();
     }
 }

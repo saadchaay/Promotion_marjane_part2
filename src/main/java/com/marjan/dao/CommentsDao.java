@@ -12,7 +12,7 @@ public class CommentsDao implements Dao<Comments>{
 
     @Override
     public Optional<Comments> findById(Long id) {
-        return Optional.ofNullable(JpaFetch.getEm().find(Comments.class, id));
+        return Optional.ofNullable(JPA.getEntityManager().find(Comments.class, id));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class CommentsDao implements Dao<Comments>{
 
     @Override
     public List<Comments> all() {
-        return JpaFetch.getEm().createQuery("from Comments ", Comments.class).getResultList();
+        return JPA.getEntityManager().createQuery("from Comments ", Comments.class).getResultList();
     }
 
     @Override

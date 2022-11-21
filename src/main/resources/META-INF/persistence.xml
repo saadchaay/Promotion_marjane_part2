@@ -12,12 +12,12 @@
         <class>com.marjan.entities.SubCategories</class>
         <class>com.marjan.entities.SupAdmin</class>
         <properties>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://postgresqldb:5432/market"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/jpa_demo"/>
             <property name="hibernate.connection.username" value="postgres"/>
-            <property name="hibernate.connection.password" value="admin"/>
+            <property name="hibernate.connection.password" value="password"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>

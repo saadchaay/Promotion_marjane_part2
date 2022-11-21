@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class PromotionsDao implements Dao<Promotions>{
     @Override
     public Optional<Promotions> findById(Long id) {
-        return Optional.ofNullable(JpaFetch.getEm().find(Promotions.class, id));
+        return Optional.ofNullable(JPA.getEntityManager().find(Promotions.class, id));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class PromotionsDao implements Dao<Promotions>{
 
     @Override
     public List<Promotions> all() {
-        return JpaFetch.getEm().createQuery("from Promotions ", Promotions.class).getResultList();
+        return JPA.getEntityManager().createQuery("from Promotions ", Promotions.class).getResultList();
     }
 
     @Override

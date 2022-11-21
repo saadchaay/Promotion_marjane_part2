@@ -86,10 +86,10 @@
                 <div class="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
                     <!-- component -->
                     <div class="overflow-x-auto">
-                        <div class="rounded-xl bg-white flex flex-column items-center justify-center bg-white font-sans overflow-hidden" x-data="{alert: true}">
+                        <div class="rounded-xl bg-white flex-column items-center justify-center bg-white font-sans overflow-hidden" x-data="{alert: true}">
 
                             <c:if test="${accept}" >
-                                 <div class="mb-4 rounded-md bg-green-50 p-4" x-show="alert">
+                                 <div class="mb-4 mx-4 rounded-md bg-green-50 p-4" x-show="alert">
                                     <div class="flex">
                                         <div class="flex-shrink-0">
                                             <!-- Heroicon name: solid/check-circle -->
@@ -115,7 +115,7 @@
                                 </div>
                             </c:if>
                             <c:if test="${reject}" >
-                                <div class="mb-4 rounded-md bg-red-50 p-4" x-show="alert">
+                                <div class="mb-4 mx-4 rounded-md bg-red-50 p-4" x-show="alert">
                                     <div class="flex">
                                         <div class="flex-shrink-0">
                                             <!-- Heroicon name: solid/check-circle -->
@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
                             </c:if>
-                            <div class="w-full lg:w-full mx-6">
+                            <div class="w-auto mx-6">
                                 <div class="bg-white shadow-md rounded my-6">
                                     <table class="min-w-max w-full table-auto">
                                         <thead>

@@ -36,7 +36,7 @@ class UsersControllerTest {
         user.setRole(Enum.role.ADMIN.toString());
         user.setEmail("fadw393@gmail.com");
         user.setPassword("fadw1234");
-        user.setStoreId(4);
+        user.setStoreId(1);
         assertTrue(UsersController.addUser(user.getName(),
                 user.getRole(),
                 user.getEmail(),

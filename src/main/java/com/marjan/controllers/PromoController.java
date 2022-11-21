@@ -28,14 +28,14 @@ public class PromoController {
     }
 
     public static List<Promotions> listPendingPromotions(Long storeId){
-//        if(LocalTime.now().isAfter(LocalTime.of(8,0,0)) && LocalTime.now().isBefore(LocalTime.of(12,0,0))){
+        if(LocalTime.now().isAfter(LocalTime.of(8,0,0)) && LocalTime.now().isBefore(LocalTime.of(12,0,0))){
             return new PromotionsDao().all().stream()
                     .filter(promo ->  promo.getStoreId() == storeId)
                     .filter(promo -> Objects.equals(promo.getStatus(), Enum.status.PENDING.toString()))
                     .collect(Collectors.toList());
-//        }else{
-//            return null;
-//        }
+        }else{
+            return null;
+        }
     }
 
     public static Boolean addPromotion(Promotions promo) {

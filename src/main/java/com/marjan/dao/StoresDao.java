@@ -12,7 +12,7 @@ public class StoresDao implements Dao<Stores> {
 
     @Override
     public Optional<Stores> findById(Long id) {
-        return Optional.ofNullable(JpaFetch.getEm().find(Stores.class, id));
+        return Optional.ofNullable(JPA.getEntityManager().find(Stores.class, id));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class StoresDao implements Dao<Stores> {
 
     @Override
     public List<Stores> all() {
-        return JpaFetch.getEm().createQuery("from Stores ", Stores.class).getResultList();
+        return JPA.getEntityManager().createQuery("from Stores ", Stores.class).getResultList();
     }
 
     @Override

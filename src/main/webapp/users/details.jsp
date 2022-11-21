@@ -45,7 +45,55 @@
                                 <div class="sm:col-span-2">
                                     <dt class="text-sm font-medium text-gray-500">Status</dt>
                                     <dd class="mt-1 text-sm text-gray-900">
-                                        ${promo.getStatus()}
+                                        <c:if test="${ promo.getStatus() == 'REJECTED' }" >
+                                            <strong
+                                                    class="rounded bg-red-100 px-3 py-1.5 text-xs font-medium text-red-700"
+                                            >
+                                                Rejected
+                                            </strong>
+                                        </c:if>
+                                        <c:if test="${ promo.getStatus() == 'ACCEPTED' }" >
+                                            <strong
+                                                    class="rounded bg-green-100 px-3 py-1.5 text-xs font-medium text-green-700"
+                                            >
+                                                Accepted
+                                            </strong>
+                                        </c:if>
+                                        <c:if test="${ promo.getStatus() == 'PENDING' }" >
+                                            <strong
+                                                    class="rounded bg-amber-100 px-3 py-1.5 text-xs font-medium text-amber-700"
+                                            >
+                                                Pending
+                                            </strong>
+                                        </c:if>
+                                        <c:if test="${ promo.getStatus() == 'EXPIRED' }" >
+                                            <strong
+                                                    class="rounded bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700"
+                                            >
+                                                Expired
+                                            </strong>
+                                        </c:if>
+                                    </dd>
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <dt class="text-sm font-medium text-gray-500">Comment</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">
+                                        <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                                            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                                <div class="w-0 flex-1 flex items-center">
+                                                    <!-- Heroicon name: solid/paper-clip -->
+                                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path></svg>
+                                                    <span class="ml-2 flex-1 w-0 truncate">
+                                                        <c:if test="${comment != null }" >
+                                                            ${comment.getComment()}
+                                                        </c:if>
+                                                        <c:if test="${comment == null }" >
+                                                            NAN
+                                                        </c:if>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </dd>
                                 </div>
                             </dl>

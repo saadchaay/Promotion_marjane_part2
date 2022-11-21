@@ -12,7 +12,7 @@ public class AdminDao implements Dao<SupAdmin> {
 
     @Override
     public Optional<SupAdmin> findById(Long id) {
-        return Optional.ofNullable(JpaFetch.getEm().find(SupAdmin.class, id));
+        return Optional.ofNullable(JPA.getEntityManager().find(SupAdmin.class, id));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class AdminDao implements Dao<SupAdmin> {
 
     @Override
     public List<SupAdmin> all() {
-        return JpaFetch.getEm().createQuery("from SupAdmin ", SupAdmin.class).getResultList();
+        return JPA.getEntityManager().createQuery("from SupAdmin ", SupAdmin.class).getResultList();
     }
 
     @Override

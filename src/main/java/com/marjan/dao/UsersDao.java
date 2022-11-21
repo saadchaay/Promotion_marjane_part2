@@ -12,7 +12,7 @@ public class UsersDao implements Dao<Users> {
 
     @Override
     public Optional<Users> findById(Long id) {
-        return Optional.ofNullable(JpaFetch.getEm().find(Users.class, id));
+        return Optional.ofNullable(JPA.getEntityManager().find(Users.class, id));
     }
 
     @Override
@@ -25,7 +25,7 @@ public class UsersDao implements Dao<Users> {
 
     @Override
     public List<Users> all() {
-        return JpaFetch.getEm().createQuery("from Users ", Users.class).getResultList();
+        return JPA.getEntityManager().createQuery("from Users ", Users.class).getResultList();
     }
 
     @Override

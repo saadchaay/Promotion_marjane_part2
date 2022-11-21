@@ -30,5 +30,12 @@ public class JPA {
         return entityManagerFactory;
     }
 
+    public static EntityManager getEntityManager(){
+        entityManager.clear();
+        entityManager.close();
+        entityManager = getEmf().createEntityManager();
+        return entityManager;
+    }
+
 
 }

@@ -21,7 +21,7 @@ import java.util.Objects;
 @WebServlet(name = "IndexServlet", value = "/admin/")
 public class IndexServlet extends HttpServlet {
 
-    static HashMap<String, Boolean> feedback;
+    static HashMap<String, Boolean> feedback = new HashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,8 +46,7 @@ public class IndexServlet extends HttpServlet {
         switch (request.getParameter("action")){
             case "promo" -> addNewPromotion(session, request, response);
             case "manager" -> addNewManager(session, request, response);
-            case "delete" -> deletePromo(Integer.parseInt(request.getParameter("promo")));
-            case "detail" -> detailPromo(Integer.parseInt(request.getParameter("promo")), request, response);
+            case "delete" -> deletePromo(Integer.parseInt(request.getParameter("promo")), request, response);
         }
     }
 
@@ -92,15 +91,13 @@ public class IndexServlet extends HttpServlet {
         response.sendRedirect("/admin/");
     }
 
-    public void deletePromo(int promoId){
+    public void deletePromo(int promoId, HttpServletRequest req, HttpServletResponse res) throws IOException {
         if(new PromotionsDao().delete((long) promoId)){
             feedback.put("delete", true);
         }else{
             feedback.put("errorDelete", true);
         }
+        res.sendRedirect("/admin/");
     }
 
-    public void detailPromo(int promo, HttpServletRequest req, HttpServletResponse res){
-
-    }
 }

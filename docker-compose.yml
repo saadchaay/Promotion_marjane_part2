@@ -1,0 +1,16 @@
+version: "3"
+services:
+  postgresqldb:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=market
+  app:
+    image: marjan_market_promo
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresqldb

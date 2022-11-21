@@ -1,17 +1,12 @@
 package com.marjan.controllers;
 
 import com.marjan.dao.PromotionsDao;
-import com.marjan.dao.StoresDao;
 import com.marjan.dao.UsersDao;
-import com.marjan.entities.Stores;
 import com.marjan.entities.Users;
 import com.marjan.helpers.Enum;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class StatisticController {
@@ -58,4 +53,5 @@ public class StatisticController {
                 .filter(user -> user.getStoreId() == storeID)
                 .filter(user -> Objects.equals(user.getRole(), Enum.role.MANAGER.toString())).count();
     }
+
 }

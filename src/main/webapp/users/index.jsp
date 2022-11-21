@@ -161,6 +161,13 @@
                                                                   Pending
                                                               </strong>
                                                           </c:if>
+                                                          <c:if test="${ promo.getStatus() == 'EXPIRED' }" >
+                                                              <strong
+                                                                      class="rounded bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700"
+                                                              >
+                                                                  Expired
+                                                              </strong>
+                                                          </c:if>
                                                       </td>
                                                       <td class="flex justify-center items-center">
                                                           <form action="${pageContext.request.contextPath}/admin/?action=delete&promo=${promo.getId()}" method="post">
@@ -297,7 +304,6 @@
                                           </div>
                                       </div>
                                   </div>
-
                               </div>
                           </section>
                       </div>
@@ -324,7 +330,9 @@
                                                                   <p class="text-sm text-gray-500 truncate"> ${manager.getEmail()} </p>
                                                               </div>
                                                               <div>
-                                                                  <a href="#" class="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"> View </a>
+                                                                  <a href="${pageContext.request.contextPath}/admin/managers?action=delete&manager=${manager.getId()}" >
+                                                                      <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                                  </a>
                                                               </div>
                                                           </div>
                                                       </li>
